@@ -659,13 +659,12 @@ def main(_):
 
     if FLAGS.do_train:
         # 1. 将数据转化为tf_record 数据
-        if data_config.get('train.tf_record_path', '') == '':
-            train_file = os.path.join(FLAGS.output_dir, "train.tf_record")
-            filed_based_convert_examples_to_features(
+        
+        train_file = os.path.join(FLAGS.output_dir, "train.tf_record")
+        filed_based_convert_examples_to_features(
                 train_examples, label_list, FLAGS.max_seq_length, tokenizer, train_file)
-        else:
-            train_file = data_config.get('train.tf_record_path')
-        num_train_size = num_train_size = int(data_config['num_train_size'])
+       
+        num_train_size = int(data_config['num_train_size'])
         tf.logging.info("***** Running training *****")
         tf.logging.info("  Num examples = %d", num_train_size)
         tf.logging.info("  Batch size = %d", FLAGS.train_batch_size)
