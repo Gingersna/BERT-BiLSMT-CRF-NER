@@ -35,7 +35,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
 config = tf.ConfigProto() 
-config.gpu_options.per_process_gpu_memory_fraction = 0.7# 占用GPU90%的显存
+config.gpu_options.per_process_gpu_memory_fraction = 0.5# 占用GPU90%的显存
 session = tf.Session(config=config)
 flags = tf.flags
 
