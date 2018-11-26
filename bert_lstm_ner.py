@@ -175,7 +175,7 @@ class DataProcessor(object):
     @classmethod
     def _read_data(cls, input_file):
         """Reads a BIO data."""
-        with codecs.open(input_file, 'r', encoding='utf-8') as f:
+        with open(input_file, 'r', encoding='utf-8') as f:
             lines = []
             words = []
             labels = []
@@ -264,7 +264,7 @@ def convert_single_example(ex_index, example, label_list, max_seq_length, tokeni
     for (i, label) in enumerate(label_list, 1):
         label_map[label] = i
     # 保存label->index 的map
-    with codecs.open(os.path.join(FLAGS.output_dir, 'label2id.pkl'), 'wb') as w:
+    with open(os.path.join(FLAGS.output_dir, 'label2id.pkl'), 'wb') as w:
         pickle.dump(label_map, w)
     textlist = example.text.split(' ')
     labellist = example.label.split(' ')
@@ -618,7 +618,7 @@ def main(_):
     num_warmup_steps = None
 
     if os.path.exists(FLAGS.data_config_path):
-        with codecs.open(FLAGS.data_config_path) as fd:
+        with open(FLAGS.data_config_path) as fd:
             data_config = json.load(fd)
     else:
         data_config = {}
@@ -705,7 +705,7 @@ def main(_):
             drop_remainder=eval_drop_remainder)
         result = estimator.evaluate(input_fn=eval_input_fn)
         output_eval_file = os.path.join(FLAGS.output_dir, "eval_results.txt")
-        with codecs.open(output_eval_file, "w", encoding='utf-8') as writer:
+        with open(output_eval_file, "w", encoding='utf-8') as writer:
             tf.logging.info("***** Eval results *****")
             for key in sorted(result.keys()):
                 tf.logging.info("  %s = %s", key, str(result[key]))
@@ -713,7 +713,7 @@ def main(_):
 
     # 保存数据的配置文件，避免在以后的训练过程中多次读取训练以及测试数据集，消耗时间
     if not os.path.exists(FLAGS.data_config_path):
-        with codecs.open(FLAGS.data_config_path, 'a', encoding='utf-8') as fd:
+        with open(FLAGS.data_config_path, 'a', encoding='utf-8') as fd:
             json.dump(data_config, fd)
 
     if FLAGS.do_predict:
@@ -721,7 +721,7 @@ def main(_):
         if os.path.exists(token_path):
             os.remove(token_path)
 
-        with codecs.open(os.path.join(FLAGS.output_dir, 'label2id.pkl'), 'rb') as rf:
+        with open(os.path.join(FLAGS.output_dir, 'label2id.pkl'), 'rb') as rf:
             label2id = pickle.load(rf)
             id2label = {value: key for key, value in label2id.items()}
 
@@ -751,7 +751,7 @@ def main(_):
             predict_steps = int(len(predict_examples) / FLAGS.eval_batch_size)
         predicted_result = estimator.evaluate(input_fn=predict_input_fn)
         output_eval_file = os.path.join(FLAGS.output_dir, "predicted_results.txt")
-        with codecs.open(output_eval_file, "w", encoding='utf-8') as writer:
+        with open(output_eval_file, "w", encoding='utf-8') as writer:
             tf.logging.info("***** Predict results *****")
             for key in sorted(predicted_result.keys()):
                 tf.logging.info("  %s = %s", key, str(predicted_result[key]))
@@ -787,7 +787,7 @@ def main(_):
                     idx += 1
                 writer.write(line + '\n')
 
-        with codecs.open(output_predict_file, 'w', encoding='utf-8') as writer:
+        with open(output_predict_file, 'w', encoding='utf-8') as writer:
             result_to_pair(writer)
 
 def load_data():
