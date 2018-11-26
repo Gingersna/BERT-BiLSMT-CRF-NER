@@ -29,9 +29,14 @@ from lstm_crf_layer import BLSTM_CRF
 import tf_metrics
 import pickle
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+
+#os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
+
+config = tf.ConfigProto() 
+config.gpu_options.per_process_gpu_memory_fraction = 0.7# 占用GPU90%的显存
+session = tf.Session(config=config)
 flags = tf.flags
 
 FLAGS = flags.FLAGS
