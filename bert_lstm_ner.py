@@ -572,21 +572,21 @@ def main(_):
             "was only trained up to sequence length %d" %
             (FLAGS.max_seq_length, bert_config.max_position_embeddings))
 
-    if FLAGS.clean:
-        if os.path.exists(FLAGS.output_dir):
-            try:
-                os.removedirs(FLAGS.output_dir)
-            except Exception as e:
-                print(e)
-                print('pleace remove the files of output dir and data.conf')
-                exit(-1)
-        if os.path.exists(FLAGS.data_config_path):
-            try:
-                os.remove(FLAGS.data_config_path)
-            except Exception as e:
-                print(e)
-                print('pleace remove the files of output dir and data.conf')
-                exit(-1)
+    # if FLAGS.clean:
+    #     if os.path.exists(FLAGS.output_dir):
+    #         try:
+    #             os.removedirs(FLAGS.output_dir)
+    #         except Exception as e:
+    #             print(e)
+    #             print('pleace remove the files of output dir and data.conf')
+    #             exit(-1)
+    #     if os.path.exists(FLAGS.data_config_path):
+    #         try:
+    #             os.remove(FLAGS.data_config_path)
+    #         except Exception as e:
+    #             print(e)
+    #             print('pleace remove the files of output dir and data.conf')
+    #             exit(-1)
     task_name = FLAGS.task_name.lower()
     if task_name not in processors:
         raise ValueError("Task not found: %s" % (task_name))
