@@ -241,7 +241,7 @@ def write_tokens(tokens, mode):
     """
     if mode == "test":
         path = os.path.join(FLAGS.output_dir, "token_" + mode + ".txt")
-        wf = codecs.open(path, 'a', encoding='utf-8')
+        wf = open(path, 'a', encoding='utf-8')
         for token in tokens:
             if token != "**NULL**":
                 wf.write(token + '\n')
