@@ -856,3 +856,5 @@ if __name__ == "__main__":
     # flags.FLAGS.set_default('do_predict', True)
     tf.app.run()
     # load_data()
+    writer = tf.summary.FileWriter("/tmp/graph", tf.get_default_graph())
+    writer.close()
