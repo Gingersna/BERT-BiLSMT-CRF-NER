@@ -799,6 +799,7 @@ def main(_):
                 line_token = str(predict_line.text).split(' ')
                 label_token = str(predict_line.label).split(' ')
                 if len(line_token) != len(label_token):
+                    tf.logging.info('line_token != label_token')
                     tf.logging.info(predict_line.text)
                     tf.logging.info(predict_line.label)
                 for id in prediction:
@@ -813,7 +814,10 @@ def main(_):
                     except Exception as e:
                         tf.logging.info(e)
                         tf.logging.info(predict_line.text)
+                        tf.logging.info(len(predict_line.text))
+                        tf.logging.info(idx)
                         tf.logging.info(predict_line.label)
+                        
                         line = ''
                         break
                     idx += 1
