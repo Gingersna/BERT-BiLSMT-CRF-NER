@@ -15,6 +15,7 @@ from __future__ import print_function
 import collections
 import os
 import json
+import re
 
 import tensorflow as tf
 import codecs
@@ -177,19 +178,46 @@ class DataProcessor(object):
         """Gets the list of labels for this data set."""
         raise NotImplementedError()
 
+    # @classmethod
+    # def _read_data(cls, input_file):
+    #     """Reads a BIO data."""
+    #     with open(input_file, 'r', encoding='utf-8') as f:
+    #         lines = []
+    #         words = []
+    #         labels = []
+    #         for line in f:
+    #             contends = line.strip()
+    #             tokens = contends.split(' ')
+    #             if len(tokens) == 2:
+    #                 word = line.strip().split(' ')[0]
+    #                 label = line.strip().split(' ')[-1]
+    #             else:
+    #                 if len(contends) == 0:
+    #                     l = ' '.join([label for label in labels if len(label) > 0])
+    #                     w = ' '.join([word for word in words if len(word) > 0])
+    #                     lines.append([l, w])
+    #                     words = []
+    #                     labels = []
+    #                     continue
+    #             if contends.startswith("-DOCSTART-"):
+    #                 words.append('')
+    #                 continue
+    #             words.append(word)
+    #             labels.append(label)
+    #         return lines
     @classmethod
-    def _read_data(cls, input_file):
-        """Reads a BIO data."""
+    def _read_data(input_file):
+        """Reads a BIO data. New version that can be compatible with msra dataset and renmin news dataset"""
         with open(input_file, 'r', encoding='utf-8') as f:
             lines = []
             words = []
             labels = []
             for line in f:
                 contends = line.strip()
-                tokens = contends.split(' ')
+                tokens = re.split("\t| ", contends)
                 if len(tokens) == 2:
-                    word = line.strip().split(' ')[0]
-                    label = line.strip().split(' ')[-1]
+                    word = tokens[0]
+                    label = tokens[-1]
                 else:
                     if len(contends) == 0:
                         l = ' '.join([label for label in labels if len(label) > 0])
