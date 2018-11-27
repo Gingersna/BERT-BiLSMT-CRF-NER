@@ -236,6 +236,7 @@ class DataProcessor(object):
 
 class NerProcessor(DataProcessor):
     def get_train_examples(self, data_dir):
+        tf.logging.info('**Getting train set**')
         return self._create_example(
             self._read_data(os.path.join(data_dir, "train.txt")), "train"
         )
