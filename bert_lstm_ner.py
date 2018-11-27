@@ -214,7 +214,7 @@ class DataProcessor(object):
             labels = []
             for line in f:
                 contends = line.strip()
-                tokens = re.split("\t| ", contends)
+                tokens = re.split("\t| ", contends) # msra dataset use \t to split
                 if len(tokens) == 2:
                     word = tokens[0]
                     label = tokens[-1]
@@ -782,7 +782,7 @@ def main(_):
         if FLAGS.use_tpu:
             predict_steps = int(len(predict_examples) / FLAGS.eval_batch_size)
         predicted_result = estimator.evaluate(input_fn=predict_input_fn)
-        output_eval_file = os.path.join(FLAGS.output_dir, "predicted_results.txt")
+        output_eval_file = os.path.join(FLAGS.output_dir, "msra_predicted_results.txt")
         with open(output_eval_file, "w", encoding='utf-8') as writer:
             tf.logging.info("***** Predict results *****")
             for key in sorted(predicted_result.keys()):
