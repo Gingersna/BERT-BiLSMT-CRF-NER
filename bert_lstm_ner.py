@@ -699,6 +699,8 @@ def main(_):
         # 1. 将数据转化为tf_record 数据
         
         train_file = os.path.join(FLAGS.output_dir, "train.tf_record")
+        tf.logging.info('****show train example info*****')
+        tf.logging.info(train_examples)
         filed_based_convert_examples_to_features(
                 train_examples, label_list, FLAGS.max_seq_length, tokenizer, train_file)
        
