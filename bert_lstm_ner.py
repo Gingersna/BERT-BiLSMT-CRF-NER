@@ -219,7 +219,7 @@ class DataProcessor(object):
                     word = tokens[0]
                     label = tokens[-1]
                 else:
-                    if len(contends) == 0:
+                    if len(contends) == 0 and words[-1] in ['。', '？', '！', '.']:
                         l = ' '.join([label for label in labels if len(label) > 0])
                         w = ' '.join([word for word in words if len(word) > 0])
                         lines.append([l, w])
