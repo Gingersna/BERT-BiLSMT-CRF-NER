@@ -247,7 +247,7 @@ class NerProcessor(DataProcessor):
 
     def get_test_examples(self, data_dir):
         return self._create_example(
-            self._read_data(os.path.join(data_dir, "msra.txt")), "test") ## use msra dataset to test
+            self._read_data(os.path.join(data_dir, "test_from_msra.txt")), "test") ## use msra dataset to test
 
     def get_labels(self):
         return ["O", "B-PER", "I-PER", "B-ORG", "I-ORG", "B-LOC", "I-LOC", "X", "[CLS]", "[SEP]"]
