@@ -762,7 +762,7 @@ def main(_):
                 writer.write("%s = %s\n" % (key, str(predicted_result[key])))
 
         result = estimator.predict(input_fn=predict_input_fn)
-        output_predict_file = os.path.join(FLAGS.output_dir, "label_test.txt")
+        output_predict_file = os.path.join(FLAGS.output_dir, "msra_label_test.txt")
 
         def result_to_pair(writer):
             for predict_line, prediction in zip(predict_examples, result):
