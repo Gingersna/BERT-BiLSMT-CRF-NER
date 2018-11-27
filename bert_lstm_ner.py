@@ -813,10 +813,15 @@ def main(_):
                         line += line_token[idx] + '\t' + label_token[idx] + '\t' + curr_labels +  '\n'
                     except Exception as e:
                         tf.logging.info(e)
+                        tf.logging.info('idx:'+str(idx))
                         tf.logging.info(predict_line.text)
                         tf.logging.info(len(predict_line.text))
-                        tf.logging.info(idx)
                         tf.logging.info(predict_line.label)
+                        tf.logging.info(len(predict_line.label))
+
+                        tf.logging.info('length of token')
+                        tf.logging.info(len(line_token))
+                        tf.logging.info(len(label_token))
                         
                         line = ''
                         break
