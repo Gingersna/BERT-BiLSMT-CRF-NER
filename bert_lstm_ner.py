@@ -663,20 +663,20 @@ def main(_):
 
     if FLAGS.do_train:
         # 加载训练数据
-        if len(data_config) == 0:
-            tf.logging.info("加载训练数据")
-            train_examples = processor.get_train_examples(FLAGS.data_dir)
-            tf.logging.info(train_examples)
-            num_train_steps = int(
-                len(train_examples) / FLAGS.train_batch_size * FLAGS.num_train_epochs)
-            num_warmup_steps = int(num_train_steps * FLAGS.warmup_proportion)
+        #if len(data_config) == 0:
+        tf.logging.info("加载训练数据")
+        train_examples = processor.get_train_examples(FLAGS.data_dir)
+        tf.logging.info(train_examples)
+        num_train_steps = int(
+            len(train_examples) / FLAGS.train_batch_size * FLAGS.num_train_epochs)
+        num_warmup_steps = int(num_train_steps * FLAGS.warmup_proportion)
 
-            data_config['num_train_steps'] = num_train_steps
-            data_config['num_warmup_steps'] = num_warmup_steps
-            data_config['num_train_size'] = len(train_examples)
-        else:
-            num_train_steps = int(data_config['num_train_steps'])
-            num_warmup_steps = int(data_config['num_warmup_steps'])
+        data_config['num_train_steps'] = num_train_steps
+        data_config['num_warmup_steps'] = num_warmup_steps
+        data_config['num_train_size'] = len(train_examples)
+        #else:
+            #num_train_steps = int(data_config['num_train_steps'])
+            #num_warmup_steps = int(data_config['num_warmup_steps'])
     # 返回的model_dn 是一个函数，其定义了模型，训练，评测方法，并且使用钩子参数，加载了BERT模型的参数进行了自己模型的参数初始化过程
     # tf 新的架构方法，通过定义model_fn 函数，定义模型，然后通过EstimatorAPI进行模型的其他工作，Es就可以控制模型的训练，预测，评估工作等。
     model_fn = model_fn_builder(
