@@ -396,6 +396,7 @@ def filed_based_convert_examples_to_features(
     """
     writer = tf.python_io.TFRecordWriter(output_file)
     # 遍历训练数据
+    tf.logging.info(examples)
     for (ex_index, example) in enumerate(examples):
         if ex_index % 5000 == 0:
             tf.logging.info("Writing example %d of %d" % (ex_index, len(examples)))
