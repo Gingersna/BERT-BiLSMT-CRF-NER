@@ -806,7 +806,7 @@ def main(_):
                     if id == 0:
                         continue
                     curr_labels = id2label[id]
-                    if curr_labels in ['[CLS]', '[SEP]']:
+                    if curr_labels in ['[CLS]', '[SEP]', "X"]:
                         continue
                     # 不知道为什么，这里会出现idx out of range 的错误。。。do not know why here cache list out of range exception!
                     try:
