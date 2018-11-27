@@ -206,7 +206,7 @@ class DataProcessor(object):
     #             labels.append(label)
     #         return lines
     @classmethod
-    def _read_data(input_file):
+    def _read_data(cls, input_file):
         """Reads a BIO data. New version that can be compatible with msra dataset and renmin news dataset"""
         with open(input_file, 'r', encoding='utf-8') as f:
             lines = []
