@@ -664,7 +664,9 @@ def main(_):
     if FLAGS.do_train:
         # 加载训练数据
         if len(data_config) == 0:
+            tf.logging.info("加载训练数据")
             train_examples = processor.get_train_examples(FLAGS.data_dir)
+            tf.logging.info(train_examples)
             num_train_steps = int(
                 len(train_examples) / FLAGS.train_batch_size * FLAGS.num_train_epochs)
             num_warmup_steps = int(num_train_steps * FLAGS.warmup_proportion)
@@ -700,7 +702,7 @@ def main(_):
         
         train_file = os.path.join(FLAGS.output_dir, "train.tf_record")
         tf.logging.info('****show train example info*****')
-        tf.logging.info(train_examples)
+        tf.logging.info(train)
         filed_based_convert_examples_to_features(
                 train_examples, label_list, FLAGS.max_seq_length, tokenizer, train_file)
        
