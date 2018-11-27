@@ -255,9 +255,12 @@ class NerProcessor(DataProcessor):
     def _create_example(self, lines, set_type):
         examples = []
         for (i, line) in enumerate(lines):
+            tf.logging.info("*** Reading ***")
             guid = "%s-%s" % (set_type, i)
             text = tokenization.convert_to_unicode(line[1])
             label = tokenization.convert_to_unicode(line[0])
+            tf.logging.info(text)
+            tf.logging.info(label)
             if i == 0:
                 print(label)
             examples.append(InputExample(guid=guid, text=text, label=label))
