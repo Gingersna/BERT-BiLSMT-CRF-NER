@@ -720,15 +720,15 @@ def main(_):
             drop_remainder=True)
         estimator.train(input_fn=train_input_fn, max_steps=num_train_steps)
     if FLAGS.do_eval:
-        if data_config.get('eval.tf_record_path', '') == '':
-            eval_examples = processor.get_dev_examples(FLAGS.data_dir)
-            eval_file = os.path.join(FLAGS.output_dir, "eval.tf_record")
-            filed_based_convert_examples_to_features(
-                eval_examples, label_list, FLAGS.max_seq_length, tokenizer, eval_file)
-            data_config['eval.tf_record_path'] = eval_file
-            data_config['num_eval_size'] = len(eval_examples)
-        else:
-            eval_file = data_config['eval.tf_record_path']
+        #
+        eval_examples = processor.get_dev_examples(FLAGS.data_dir)
+        eval_file = os.path.join(FLAGS.output_dir, "eval.tf_record")
+        filed_based_convert_examples_to_features(
+            eval_examples, label_list, FLAGS.max_seq_length, tokenizer, eval_file)
+        data_config['eval.tf_record_path'] = eval_file
+        data_config['num_eval_size'] = len(eval_examples)
+        # else:
+        #     eval_file = data_config['eval.tf_record_path']
         # 打印验证集数据信息
         num_eval_size = data_config.get('num_eval_size', 0)
         tf.logging.info("***** Running evaluation *****")
