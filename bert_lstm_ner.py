@@ -69,6 +69,9 @@ flags.DEFINE_string(
     "The output directory where the model checkpoints will be written."
 )
 
+flags.DEFINE_string(
+    "export_dir", None,
+    "The dir where the exported model will be written.")
 ## Other parameters
 flags.DEFINE_string(
     "init_checkpoint", os.path.join(bert_path, 'bert_model.ckpt'),
@@ -94,6 +97,9 @@ flags.DEFINE_bool("use_tpu", False, "Whether to use TPU or GPU/CPU.")
 flags.DEFINE_bool("do_eval", True, "Whether to run eval on the dev set.")
 
 flags.DEFINE_bool("do_predict", True, "Whether to run the model in inference mode on the test set.")
+
+
+flags.DEFINE_bool("do_export", False, "Whether to export the model.")
 
 flags.DEFINE_integer("train_batch_size", 16, "Total batch size for training.")
 
@@ -593,6 +599,19 @@ def model_fn_builder(bert_config, num_labels, init_checkpoint, learning_rate,
 
     return model_fn
 
+def serving_input_fn():
+    label_ids = tf.placeholder(tf.int32, [None], name='label_ids')
+    input_ids = tf.placeholder(tf.int32, [None, FLAGS.max_seq_length], name='input_ids')
+    input_mask = tf.placeholder(tf.int32, [None, FLAGS.max_seq_length], name='input_mask')
+    segment_ids = tf.placeholder(tf.int32, [None, FLAGS.max_seq_length], name='segment_ids')
+    input_fn = tf.estimator.export.build_raw_serving_input_receiver_fn({
+        'label_ids': label_ids,
+        'input_ids': input_ids,
+        'input_mask': input_mask,
+        'segment_ids': segment_ids,
+    })()
+    return input_fn
+
 
 def main(_):
     tf.logging.set_verbosity(tf.logging.INFO)
@@ -839,6 +858,10 @@ def main(_):
 
         with open(output_predict_file, 'w', encoding='utf-8') as writer:
             result_to_pair(writer)
+            
+    if FLAGS.do_export:
+        estimator._export_to_tpu = False
+        estimator.export_savedmodel(FLAGS.export_dir, serving_input_fn) 
 
 def load_data():
     processer = NerProcessor()
